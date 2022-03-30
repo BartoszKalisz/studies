@@ -1,0 +1,48 @@
+package SO_1;
+
+import java.util.ArrayList;
+
+import static java.lang.Math.round;
+
+public class SJF_z {
+    ArrayList<Double> mieszana;
+    double x;
+    double pomocnicza_1;
+    double pomocnicza_2;
+    double czas_zakonczenia=2;
+    double laczny_czas_czekania=0;
+    public SJF_z(ArrayList<Double> pomocnicza)
+    {
+        this.mieszana=pomocnicza;
+
+    }
+
+    public double oblicz()
+    {mieszana.add(0.0);
+     mieszana.add(52.0);
+        for(int i=0;i<mieszana.size();i=i+2)
+        {
+            for(int j=0;j<mieszana.size()-2;j=j+2)
+            {
+                if(mieszana.get(j+1)>mieszana.get(j+3))
+                {
+                    pomocnicza_1= mieszana.get(j);
+                    pomocnicza_2= mieszana.get(j+1);
+                    mieszana.set(j, mieszana.get(j+2));
+                    mieszana.set(j+2,pomocnicza_1);
+                    mieszana.set(j+1, mieszana.get(j+3));
+                    mieszana.set(j+3,pomocnicza_2);
+                }
+            }
+        }
+        for(int i=0;i<mieszana.size();i=i+2)
+        {
+            czas_zakonczenia=czas_zakonczenia+mieszana.get(i+1);
+            laczny_czas_czekania=laczny_czas_czekania+czas_zakonczenia- mieszana.get(i+1)-mieszana.get(i);
+
+        }
+        x=round((2*laczny_czas_czekania/(mieszana.size()+2))*10);
+
+        return x/10;
+    }
+}
